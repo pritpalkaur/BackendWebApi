@@ -43,16 +43,25 @@ public class Startup
 
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+        //services.AddCors(options =>
+        //{
+        //    options.AddPolicy("AllowReactApp",
+        //        builder =>
+        //        {
+        //            builder.WithOrigins("http://localhost:3000") // React app URL
+        //                   .AllowAnyMethod()
+        //                   .AllowAnyHeader()
+        //                   .AllowCredentials(); // Allow credentials if using cookies or authentication tokens
+        //        });
+        //});
+
         services.AddCors(options =>
         {
-            options.AddPolicy("AllowReactApp",
-                builder =>
-                {
-                    builder.WithOrigins("http://localhost:3000") // React app URL
-                           .AllowAnyMethod()
-                           .AllowAnyHeader()
-                           .AllowCredentials(); // Allow credentials if using cookies or authentication tokens
-                });
+            options.AddPolicy("AllowSpecificOrigin",
+                builder => builder
+                    .WithOrigins("http://localhost:4200") // Angular frontend URL
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
         });
 
     }
@@ -74,8 +83,10 @@ public class Startup
         app.UseStaticFiles();
         app.UseRouting();
         app.UseAuthorization();
-        app.UseCors("AllowReactApp"); // Add the CORS middleware here
+        //app.UseCors("AllowReactApp"); // Add the CORS middleware here
+        // Use CORS policy
 
+        app.UseCors("AllowSpecificOrigin"); // Apply the CORS policy
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();
