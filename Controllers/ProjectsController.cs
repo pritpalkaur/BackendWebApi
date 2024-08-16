@@ -5,10 +5,12 @@ using webapitaskup.Helper;
 using webapitaskup.Models;
 using webapitaskup.Interface;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 namespace webapitaskup.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+   // [Authorize] // Protect this controller
     public class ProjectsController : ControllerBase
     {
         private readonly AppDbContext _dbContext;
@@ -23,23 +25,31 @@ namespace webapitaskup.Controllers
 
             var projectdata = await _dbContext.Projects.ToListAsync();
             var teams = await _dbContext.Teams.ToListAsync();
-
-            foreach (var project in projectdata)
+            try
             {
-                var projectwithTeamsObj = new ProjectwithTeams
+                foreach (var project in projectdata)
                 {
-                    ProjectId = project.ProjectId,
-                    Project_Description = project.Project_Description,
-                    Project_Name = project.Project_Name,
-                    isActive = project.isActive,
-                    TeamId = project.TeamId,
-                    TeamName = teams.Where(x => x.TeamID == project.TeamId)
-                                    .Select(y => y.Team_Name)
-                                    .SingleOrDefault()
-                };
+                    var projectwithTeamsObj = new ProjectwithTeams
+                    {
+                        ProjectId = project.ProjectId,
+                        Project_Description = project.Project_Description,
+                        Project_Name = project.Project_Name,
+                        isActive = project.isActive,
+                        TeamId = project.TeamId,
+                        TeamName = teams.Where(x => x.TeamID == project.TeamId)
+                                        .Select(y => y.Team_Name)
+                                        .SingleOrDefault()
+                    };
 
-                projectwithTeams.Add(projectwithTeamsObj);
+                    projectwithTeams.Add(projectwithTeamsObj);
+                }
             }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
 
             return projectwithTeams;
         }
@@ -50,7 +60,7 @@ namespace webapitaskup.Controllers
             return await _dbContext.Teams.ToListAsync();
         }
         [HttpGet("GetProjectsById/{id}")]
-        public async Task<ActionResult<IEnumerable<ProjectwithTeams>>> GetProjectsBy(int id)
+        public async Task<ActionResult<IEnumerable<ProjectwithTeams>>> GetProjectsById(int id)
         {
             var projectwithTeams = new List<ProjectwithTeams>();
 
@@ -149,7 +159,7 @@ namespace webapitaskup.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("GetProjectByIdFromDatabase/{id}")]
         public async Task<ActionResult<Project>> GetProjectByIdFromDatabase(int id)
         {
             var project = await _dbContext.Projects.FindAsync(id);
