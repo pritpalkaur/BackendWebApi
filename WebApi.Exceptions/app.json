@@ -1,13 +1,5 @@
 {
-  "ConnectionStrings": {
-    "ErrorFolder": "C:\Employees\pritp\source\repos\mMoserSolution\mMoser.Exceptions\Log\",,,
-    "App": "C:\Employees\pritp\source\repos\mMoserSolution\mMoser.Exceptions\Log\",,,
-    "LogName": "ErrorLog"
-  },
-  "Azure": {
-    "blobStorageConnectionString": "DefaultEndpointsProtocol=https;AccountName=mmosertoolscdn;AccountKey=63ZmXgQWlVG0RIrqMK9xSPavvrRDeczzonYmvZSt1hUR1ZN3VKgweKe8eVd6NuQ6FkbkqFELefYu+ASt+LReyg==;EndpointSuffix=core.windows.net",
-    "blobStorageContainerName": "cmsexceptions"
-  }
+  
 
 }
   //<appSettings>
