@@ -4,6 +4,10 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WebApi.Data\WebApi.Data.csproj" />
+  </ItemGroup>
+
   <!--<ItemGroup>
     <ProjectReference Include="..\mMoser.Data\mMoser.Data.csproj" />
   </ItemGroup>-->
