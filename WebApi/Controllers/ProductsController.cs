@@ -12,6 +12,10 @@ namespace webapi.Controllers
    // [Authorize]
     public class ProductsController : ControllerBase
     {
+        public ProductsController()
+        {
+
+        }
         // In-memory list of products to simulate a database
         private static List<Product> products = new List<Product>
         {
