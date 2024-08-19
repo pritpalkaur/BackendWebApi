@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\pritp\\source\\repos\\webapitaskup\\webapitaskup.csproj": {}
+    "C:\\Users\\pritp\\OneDrive\\Desktop\\bkpFiles\\GitBackEnd\\FrontEndWebApi\\webapitaskup.csproj": {}
   },
   "projects": {
-    "C:\\Users\\pritp\\source\\repos\\webapitaskup\\webapitaskup.csproj": {
+    "C:\\Users\\pritp\\OneDrive\\Desktop\\bkpFiles\\GitBackEnd\\FrontEndWebApi\\webapitaskup.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\pritp\\source\\repos\\webapitaskup\\webapitaskup.csproj",
+        "projectUniqueName": "C:\\Users\\pritp\\OneDrive\\Desktop\\bkpFiles\\GitBackEnd\\FrontEndWebApi\\webapitaskup.csproj",
         "projectName": "webapitaskup",
-        "projectPath": "C:\\Users\\pritp\\source\\repos\\webapitaskup\\webapitaskup.csproj",
+        "projectPath": "C:\\Users\\pritp\\OneDrive\\Desktop\\bkpFiles\\GitBackEnd\\FrontEndWebApi\\webapitaskup.csproj",
         "packagesPath": "C:\\Users\\pritp\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\pritp\\source\\repos\\webapitaskup\\obj\\",
+        "outputPath": "C:\\Users\\pritp\\OneDrive\\Desktop\\bkpFiles\\GitBackEnd\\FrontEndWebApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
