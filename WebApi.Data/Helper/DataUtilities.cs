@@ -11,9 +11,9 @@ namespace mMoser.Data.Helpers
     public class DataUtilities
     {
 
-        private readonly mMoserApplicationDbContext _context;
+        private readonly WebApiApplicationDbContext _context;
 
-        public DataUtilities(mMoserApplicationDbContext context)
+        public DataUtilities(WebApiApplicationDbContext context)
         {
             _context = context;
         }

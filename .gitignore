@@ -16,3 +16,6 @@
 /WebApi.Business/bin/Debug/net5.0
 /WebApi.Data
 /WebApi.Business/obj
+/Webapi.Domain/bin/Debug/net6.0
+/Webapi.Domain/obj
+/WebApi.Business/bin/Debug/net6.0

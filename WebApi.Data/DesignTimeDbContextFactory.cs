@@ -6,19 +6,19 @@ using System.Diagnostics;
 
 namespace mMoser.Data
 {
-    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<mMoserApplicationDbContext>
+    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<WebApiApplicationDbContext>
     {
-        public mMoserApplicationDbContext CreateDbContext(string[] args)
+        public WebApiApplicationDbContext CreateDbContext(string[] args)
         {
             string mainPath = Path.GetFullPath(Path.Combine(System.Environment.CurrentDirectory, @"..\"));
             string folderPath = @"mMoser.Web.NetCore\";
-            var builder = new DbContextOptionsBuilder<mMoserApplicationDbContext>();
+            var builder = new DbContextOptionsBuilder<WebApiApplicationDbContext>();
             IConfigurationRoot configuration = new ConfigurationBuilder()
             .SetBasePath(mainPath + folderPath)
             .AddJsonFile("appsettings.json")
             .Build();
             builder.UseSqlServer(configuration.GetConnectionString("mMoserDefaultConnection"));
-            return new mMoserApplicationDbContext(builder.Options);
+            return new WebApiApplicationDbContext(builder.Options);
         }
     }
 }
