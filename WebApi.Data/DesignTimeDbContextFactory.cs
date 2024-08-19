@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using System.Diagnostics;
 
-namespace mMoser.Data
+namespace WebApi.Data
 {
     public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<WebApiApplicationDbContext>
     {
@@ -17,7 +17,7 @@ namespace mMoser.Data
             .SetBasePath(mainPath + folderPath)
             .AddJsonFile("appsettings.json")
             .Build();
-            builder.UseSqlServer(configuration.GetConnectionString("mMoserDefaultConnection"));
+            builder.UseSqlServer(configuration.GetConnectionString("WebApiApplicationDbContext"));
             return new WebApiApplicationDbContext(builder.Options);
         }
     }
