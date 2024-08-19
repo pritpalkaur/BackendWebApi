@@ -7,3 +7,9 @@
 /.config
 /obj
 /Properties
+/WebApi.Exceptions/bin/Debug/net5.0
+/WebApi.Exceptions/obj
+/WebApi/bin/Debug/net6.0/runtimes
+/WebApi/bin/Debug/net6.0/WebApi.Exceptions/bin/Debug/net5.0
+/WebApi/obj
+/WebApi/bin/Debug/net6.0
