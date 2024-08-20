@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WebApi.Business;
 using WebApi.Business.Interface;
-using Webapi.Domain;
+using WebApi.Domain;
 using WebApi.Data;
 using WebApi.Data.Interface;
 

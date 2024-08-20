@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using webapitaskup.Interface;
+using WebApi.Interface;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
-using webapi.Models;
+using WebApi.Models;
 using WebApi.Business;
 using WebApi.Business.Interface;
-
-namespace webapi.Controllers
+using WebApi.Exceptions.Service;
+namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -15,9 +15,11 @@ namespace webapi.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IProductBusiness _IProductBusiness;
-        public ProductsController(IProductBusiness IProductBusiness)
+        private readonly ILoggingService _ILoggingService;
+        public ProductsController(IProductBusiness IProductBusiness, ILoggingService ILoggingService)
         {
             _IProductBusiness = IProductBusiness;
+            _ILoggingService = ILoggingService; 
         }
 
         // In-memory list of products to simulate a database
@@ -48,14 +50,21 @@ namespace webapi.Controllers
         [HttpGet("GetProducts")]
         public async Task<IActionResult> GetProducts()
         {
-            //// Find the product by ID
-            //var product = products.ToList();
+             int denominator = 0;
+            try
+            {
+                if (denominator == 0)
+                {
+                    
+                throw new DivideByZeroException("Denominator cannot be zero.");
+                }
+            }
+            catch (Exception ex)
+            {
+                _ILoggingService.LogInformation(ex.Message.ToString());
+                //throw;
+            }
 
-            //// If product is not found, return 404 Not Found
-            //if (product == null)
-            //{
-            //    return NotFound(new { Message = "Product not found" });
-            //}
             var products = await _IProductBusiness.GetProductsAsync();
 
             // If product is found, return 200 OK with the product details

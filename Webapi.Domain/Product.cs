@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Webapi.Domain
+namespace WebApi.Domain
 {
 
     [Table("db_product")]

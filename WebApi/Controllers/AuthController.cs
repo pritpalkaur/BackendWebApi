@@ -3,7 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using webapi.Models;
+using WebApi.Models;
 
 [Route("api/[controller]")]
 [ApiController]

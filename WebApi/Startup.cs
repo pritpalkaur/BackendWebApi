@@ -13,7 +13,9 @@ using WebApi.Business.Implementations;
 using WebApi.Data.Interface;
 using WebApi.Data.Implementations;
 using WebApi.Data;
-
+using WebApi.Exceptions.Service;
+using Microsoft.Extensions.Logging;
+using Serilog.Extensions.Logging.File;
 public class Startup
 {
     public Startup(IConfiguration configuration)
@@ -55,6 +57,15 @@ public class Startup
         //------------------------project dependency--------------------------------------------
         services.AddScoped<IProductBusiness, ProductBusiness>();
         services.AddScoped<IProductDatabase, ProductDatabase>();
+        //------------------------error logging-------------------------------------------------
+        services.AddScoped<ILoggingService, LoggingService>(); // Custom service to log to the database
+
+                     // Configure logging providers (Console and/or File)
+        services.AddLogging(loggingBuilder =>
+        {
+            loggingBuilder.AddConsole();
+            //loggingBuilder.AddFilter("Logs/app.log"); // Requires a third-party package like Serilog.Extensions.Logging.File
+        });
 
         services.AddCors(options =>
         {
@@ -79,7 +90,7 @@ public class Startup
             app.UseExceptionHandler("/Home/Error");
             app.UseHsts();
         }
-
+      
         app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseRouting();

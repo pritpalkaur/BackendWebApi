@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace webapitaskup.Models
+namespace WebApi.Models
 {
     public class dashboard
     {

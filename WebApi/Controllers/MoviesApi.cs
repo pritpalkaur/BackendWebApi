@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
-using webapitaskup.Models; 
+using WebApi.Models; 
 
-namespace webapitaskup.Controllers
+namespace WebApi.Controllers
 {
         [Route("api/[controller]")]
         [ApiController]

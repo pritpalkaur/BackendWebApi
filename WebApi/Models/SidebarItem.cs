@@ -1,4 +1,4 @@
-﻿namespace webapitaskup.Models
+﻿namespace WebApi.Models
 {
     public class SidebarItem
     {

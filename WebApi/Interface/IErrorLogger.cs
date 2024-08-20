@@ -1,4 +1,4 @@
-﻿namespace webapitaskup.Interface
+﻿namespace WebApi.Interface
 {
     public interface IErrorLogger
     {

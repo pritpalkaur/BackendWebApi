@@ -21,3 +21,7 @@
 /WebApi.Data/bin/Debug
 /WebApi.Data/obj/Debug
 /WebApi.Data/obj
+/old/bin/Debug/net6.0
+/old/obj
+/old
+/WebApi.Exceptions/bin/Debug/net6.0

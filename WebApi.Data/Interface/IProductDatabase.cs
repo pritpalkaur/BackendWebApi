@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Webapi.Domain;
+using WebApi.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace WebApi.Data.Interface

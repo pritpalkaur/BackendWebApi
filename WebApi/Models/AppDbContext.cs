@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace webapitaskup.Models
+namespace WebApi.Models
 {
     public class AppDbContext : DbContext
     {

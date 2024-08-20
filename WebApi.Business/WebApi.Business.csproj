@@ -8,8 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WebApi.Data\WebApi.Data.csproj" />
-    <ProjectReference Include="..\Webapi.Domain\Webapi.Domain.csproj" />
-    <ProjectReference Include="..\WebApi.Exceptions\WebApi.Exceptions.csproj" />
+    <ProjectReference Include="..\Webapi.Domain\WebApi.Domain.csproj" />
   </ItemGroup>
 
 </Project>
