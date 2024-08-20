@@ -18,7 +18,8 @@ namespace WebApi.Data.Implementations
             }
             public async Task<List<Products>> GetProductsAsync()
             {
-                return await _context.Products.ToListAsync();
+            var result = await _context.Products.ToListAsync();
+                return result;
             }
 
         }

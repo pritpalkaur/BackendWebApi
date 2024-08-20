@@ -4,6 +4,8 @@ using webapitaskup.Interface;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using webapi.Models;
+using WebApi.Business;
+using WebApi.Business.Interface;
 
 namespace webapi.Controllers
 {
@@ -12,10 +14,12 @@ namespace webapi.Controllers
    // [Authorize]
     public class ProductsController : ControllerBase
     {
-        public ProductsController()
+        private readonly IProductBusiness _IProductBusiness;
+        public ProductsController(IProductBusiness IProductBusiness)
         {
-
+            _IProductBusiness = IProductBusiness;
         }
+
         // In-memory list of products to simulate a database
         private static List<Product> products = new List<Product>
         {
@@ -42,19 +46,20 @@ namespace webapi.Controllers
         }
         // Method to get a product by its ID
         [HttpGet("GetProducts")]
-        public IActionResult GetProducts()
+        public async Task<IActionResult> GetProducts()
         {
-            // Find the product by ID
-            var product = products.ToList();
+            //// Find the product by ID
+            //var product = products.ToList();
 
-            // If product is not found, return 404 Not Found
-            if (product == null)
-            {
-                return NotFound(new { Message = "Product not found" });
-            }
+            //// If product is not found, return 404 Not Found
+            //if (product == null)
+            //{
+            //    return NotFound(new { Message = "Product not found" });
+            //}
+            var products = await _IProductBusiness.GetProductsAsync();
 
             // If product is found, return 200 OK with the product details
-            return Ok(product);
+            return Ok(products);
         }
     }
 }

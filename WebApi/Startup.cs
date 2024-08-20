@@ -8,6 +8,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using webapitaskup.Models;
+using WebApi.Business.Interface;
+using WebApi.Business.Implementations;
+using WebApi.Data.Interface;
+using WebApi.Data.Implementations;
+using WebApi.Data;
 
 public class Startup
 {
@@ -41,19 +46,15 @@ public class Startup
 
         services.AddControllers();
 
-        services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-        //services.AddCors(options =>
-        //{
-        //    options.AddPolicy("AllowReactApp",
-        //        builder =>
-        //        {
-        //            builder.WithOrigins("http://localhost:3000") // React app URL
-        //                   .AllowAnyMethod()
-        //                   .AllowAnyHeader()
-        //                   .AllowCredentials(); // Allow credentials if using cookies or authentication tokens
-        //        });
-        //});
+        //services.AddDbContext<AppDbContext>(options =>
+        //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+        services.AddDbContext<WebApiApplicationDbContext>(options =>
+           options.UseSqlServer(Configuration.GetConnectionString("WebApiApplicationDbContextconstrg")));
+
+        //------------------------project dependency--------------------------------------------
+        services.AddScoped<IProductBusiness, ProductBusiness>();
+        services.AddScoped<IProductDatabase, ProductDatabase>();
 
         services.AddCors(options =>
         {

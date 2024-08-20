@@ -26,7 +26,7 @@ namespace Webapi.Domain
         public DateTime CreatedAt { get; set; }
         [Column("updated_by")]
         [StringLength(50)]
-        public string UpdatedBy { get; set; }
+        public string? UpdatedBy { get; set; }
         [Column("updated_at")]
         public DateTime? UpdatedAt { get; set; }
     }

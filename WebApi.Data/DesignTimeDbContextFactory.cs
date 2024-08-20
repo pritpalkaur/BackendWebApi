@@ -17,7 +17,7 @@ namespace WebApi.Data
             .SetBasePath(mainPath + folderPath)
             .AddJsonFile("appsettings.json")
             .Build();
-            builder.UseSqlServer(configuration.GetConnectionString("WebApiApplicationDbContext"));
+            builder.UseSqlServer(configuration.GetConnectionString("WebApiApplicationDbContextconstrg"));
             return new WebApiApplicationDbContext(builder.Options);
         }
     }
