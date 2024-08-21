@@ -1,4 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApi.Exceptions.Data
 {
@@ -10,13 +14,19 @@ namespace WebApi.Exceptions.Data
 
         public DbSet<ExceptionLog> ExceptionLogs { get; set; }
     }
-
+    [Table("db_ExceptionLog")]
     public class ExceptionLog
     {
-        public int Id { get; set; }
+        [Key]
+        [Column("ExceptionId")]
+        public int ExceptionId { get; set; }
+        [Column("Timestamp")]
         public DateTime Timestamp { get; set; }
+        [Column("Message")]
         public string Message { get; set; }
+        [Column("StackTrace")]
         public string StackTrace { get; set; }
+        [Column("Source")]
         public string Source { get; set; }
     }
 

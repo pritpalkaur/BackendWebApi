@@ -5,7 +5,7 @@ namespace WebApi.Exceptions.Service
 {
     public interface ILoggingService
     {
-        public void LogInformation(string message);
-        //Task LogExceptionAsync(Exception exception);
+        public void LogInformation(Exception ex);
+        Task LogExceptionAsync(Exception exception);
     }
 }

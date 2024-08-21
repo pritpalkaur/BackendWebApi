@@ -18,6 +18,7 @@ namespace WebApi.Data
         }
 
         public DbSet<Products> Products { get; set; }
+        public DbSet<Report> Reports { get; set; }
     }
 }
 

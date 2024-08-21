@@ -8,18 +8,58 @@ namespace WebApi.Exceptions.Service
     public class LoggingService : ILoggingService
     {
         private readonly ILogger<LoggingService> _logger;
-
-        public LoggingService(ILogger<LoggingService> logger)
+        private readonly LoggingDbContext _context;
+        public LoggingService(LoggingDbContext context, ILogger<LoggingService> logger)
         {
+            _context = context;
             _logger = logger;
         }
 
-        public void LogInformation(string message)
+        public void LogInformation(Exception ex)
         {
-            _logger.LogInformation(message);
+            _logger.LogInformation(ex.Message.ToString());
+        }
+        public async Task LogExceptionAsync(Exception exception)
+        {
+            try
+            {
+                // Check if there is an inner exception
+                if (exception.InnerException != null)
+                {
+                    var innerException = exception.InnerException;
+
+                    var innerLog = new ExceptionLog
+                    {
+                        Timestamp = DateTime.UtcNow,
+                        Message = innerException.Message,
+                        StackTrace = innerException.StackTrace,
+                        Source = innerException.Source
+                    };
+
+                    _context.ExceptionLogs.Add(innerLog);
+                }
+                else
+                {
+                    // Log the outer exception first
+                    var log = new ExceptionLog
+                    {
+                        Timestamp = DateTime.UtcNow,
+                        Message = exception.Message,
+                        StackTrace = exception.StackTrace,
+                        Source = exception.Source
+                    };
+
+                    _context.ExceptionLogs.Add(log);
+                }
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                LogInformation(ex); // Log the exception that occurred during logging
+            }
         }
 
-        // Other logging methods...
+
     }
 }
 //public class LoggingService : ILoggingService

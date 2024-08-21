@@ -16,6 +16,9 @@ using WebApi.Data;
 using WebApi.Exceptions.Service;
 using Microsoft.Extensions.Logging;
 using Serilog.Extensions.Logging.File;
+using Serilog;
+using WebApi.Exceptions.Data;
+
 public class Startup
 {
     public Startup(IConfiguration configuration)
@@ -48,11 +51,12 @@ public class Startup
 
         services.AddControllers();
 
-        //services.AddDbContext<AppDbContext>(options =>
-        //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+     
 
         services.AddDbContext<WebApiApplicationDbContext>(options =>
            options.UseSqlServer(Configuration.GetConnectionString("WebApiApplicationDbContextconstrg")));
+        services.AddDbContext<LoggingDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("ExContextconstrg")));
 
         //------------------------project dependency--------------------------------------------
         services.AddScoped<IProductBusiness, ProductBusiness>();
@@ -90,7 +94,7 @@ public class Startup
             app.UseExceptionHandler("/Home/Error");
             app.UseHsts();
         }
-      
+        app.UseSerilogRequestLogging(); // Enable Serilog request logging
         app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseRouting();

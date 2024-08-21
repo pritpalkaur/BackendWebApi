@@ -7,6 +7,7 @@ using WebApi.Models;
 using WebApi.Business;
 using WebApi.Business.Interface;
 using WebApi.Exceptions.Service;
+
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
@@ -55,13 +56,14 @@ namespace WebApi.Controllers
             {
                 if (denominator == 0)
                 {
-                    
-                throw new DivideByZeroException("Denominator cannot be zero.");
+
+                    throw new DivideByZeroException("Denominator cannot be zero.");
                 }
             }
             catch (Exception ex)
             {
-                _ILoggingService.LogInformation(ex.Message.ToString());
+                _ILoggingService.LogInformation(ex);
+                 _ILoggingService.LogExceptionAsync(ex);
                 //throw;
             }
 
