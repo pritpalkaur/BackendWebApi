@@ -18,7 +18,7 @@ using Microsoft.Extensions.Logging;
 using Serilog.Extensions.Logging.File;
 using Serilog;
 using WebApi.Exceptions.Data;
-
+using WebApi.Data.Implementations;
 public class Startup
 {
     public Startup(IConfiguration configuration)
@@ -66,8 +66,10 @@ public class Startup
         services.AddScoped<IReportDatabase, ReportDatabase>();
         //------------------------error logging-------------------------------------------------
         services.AddScoped<ILoggingService, LoggingService>(); // Custom service to log to the database
+        //-------------------------------------------------------------------------------------------------
+        services.AddSingleton<IDbConnectionFactory, SqlDbConnectionFactory>();
 
-                     // Configure logging providers (Console and/or File)
+        // Configure logging providers (Console and/or File)
         services.AddLogging(loggingBuilder =>
         {
             loggingBuilder.AddConsole();

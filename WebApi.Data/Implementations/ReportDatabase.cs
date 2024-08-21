@@ -12,68 +12,44 @@ namespace WebApi.Data.Implementations
 {
     public class ReportDatabase : IReportDatabase
     {
-        private readonly WebApiApplicationDbContext _context;
-        private readonly string _connectionString;
+        private readonly IDbConnectionFactory _dbConnectionFactory;
 
-        public ReportDatabase(WebApiApplicationDbContext context)
+        public ReportDatabase(IDbConnectionFactory dbConnectionFactory)
         {
-            _context = context;
-            _connectionString = _context.Database.GetDbConnection().ConnectionString; // Get the connection string from EF context
+            _dbConnectionFactory = dbConnectionFactory;
         }
 
         public async Task<List<Report>> GetReportsAsync()
         {
-            List<Report> reports = new List<Report>();
+            var reports = new List<Report>();
 
-            try
+            using (var connection = _dbConnectionFactory.CreateConnection())
+            using (var command = new SqlCommand("SELECT * FROM db_report", connection))
+            using (var reader = await command.ExecuteReaderAsync())
             {
-                // Using ADO.NET to make the database call
-                using (SqlConnection conn = new SqlConnection(_connectionString))
+                while (await reader.ReadAsync())
                 {
-                    await conn.OpenAsync();
-
-                    using (SqlCommand cmd = new SqlCommand("SELECT * FROM db_report", conn))
+                    reports.Add(new Report
                     {
-                        cmd.CommandType = CommandType.Text;
-
-                        using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
-                        {
-                            while (await reader.ReadAsync())
-                            {
-                                Report report = new Report
-                                {
-                                    ReportId = reader.GetInt64(reader.GetOrdinal("report_id")), // Changed from GetInt32 to GetInt64
-                                    ReportName = reader.GetString(reader.GetOrdinal("report_name")),
-                                    ReportDescription = reader.IsDBNull(reader.GetOrdinal("report_description"))
-                                                        ? null
-                                                        : reader.GetString(reader.GetOrdinal("report_description")),
-                                    CreatedAt = reader.GetDateTime(reader.GetOrdinal("created_at")),
-                                    CreatedBy = reader.GetString(reader.GetOrdinal("created_by")),
-                                    UpdatedBy = reader.IsDBNull(reader.GetOrdinal("updated_by"))
-                                                ? null
-                                                : reader.GetString(reader.GetOrdinal("updated_by")),
-                                    UpdatedAt = reader.IsDBNull(reader.GetOrdinal("updated_at"))
-                                                ? (DateTime?)null
-                                                : reader.GetDateTime(reader.GetOrdinal("updated_at"))
-                                };
-
-                                reports.Add(report);
-                            }
-                        }
-                    }
+                        ReportId = reader.GetInt64(reader.GetOrdinal("report_id")),
+                        ReportName = reader.GetString(reader.GetOrdinal("report_name")),
+                        ReportDescription = reader.IsDBNull(reader.GetOrdinal("report_description"))
+                                            ? null
+                                            : reader.GetString(reader.GetOrdinal("report_description")),
+                        CreatedAt = reader.GetDateTime(reader.GetOrdinal("created_at")),
+                        CreatedBy = reader.GetString(reader.GetOrdinal("created_by")),
+                        UpdatedBy = reader.IsDBNull(reader.GetOrdinal("updated_by"))
+                                    ? null
+                                    : reader.GetString(reader.GetOrdinal("updated_by")),
+                        UpdatedAt = reader.IsDBNull(reader.GetOrdinal("updated_at"))
+                                    ? (DateTime?)null
+                                    : reader.GetDateTime(reader.GetOrdinal("updated_at"))
+                    });
                 }
-            }
-            catch (Exception ex)
-            {
-                // Log or handle the exception as needed
-                throw new Exception("An error occurred while fetching reports", ex);
             }
 
             return reports;
         }
-
-
     }
 }
-
 
