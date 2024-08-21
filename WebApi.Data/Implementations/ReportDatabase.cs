@@ -32,7 +32,7 @@ namespace WebApi.Data.Implementations
                 {
                     await conn.OpenAsync();
 
-                    using (SqlCommand cmd = new SqlCommand("SELECT * FROM Reports", conn))
+                    using (SqlCommand cmd = new SqlCommand("SELECT * FROM db_report", conn))
                     {
                         cmd.CommandType = CommandType.Text;
 
@@ -42,12 +42,21 @@ namespace WebApi.Data.Implementations
                             {
                                 Report report = new Report
                                 {
-                                    ReportId = reader.GetInt32(reader.GetOrdinal("ReportId")),
-                                    ReportName = reader.GetString(reader.GetOrdinal("ReportName")),
-                                    CreatedAt = reader.GetDateTime(reader.GetOrdinal("ReportDate")),
-                                    CreatedBy = "admin"
-                                    // Add other properties as needed
+                                    ReportId = reader.GetInt64(reader.GetOrdinal("report_id")), // Changed from GetInt32 to GetInt64
+                                    ReportName = reader.GetString(reader.GetOrdinal("report_name")),
+                                    ReportDescription = reader.IsDBNull(reader.GetOrdinal("report_description"))
+                                                        ? null
+                                                        : reader.GetString(reader.GetOrdinal("report_description")),
+                                    CreatedAt = reader.GetDateTime(reader.GetOrdinal("created_at")),
+                                    CreatedBy = reader.GetString(reader.GetOrdinal("created_by")),
+                                    UpdatedBy = reader.IsDBNull(reader.GetOrdinal("updated_by"))
+                                                ? null
+                                                : reader.GetString(reader.GetOrdinal("updated_by")),
+                                    UpdatedAt = reader.IsDBNull(reader.GetOrdinal("updated_at"))
+                                                ? (DateTime?)null
+                                                : reader.GetDateTime(reader.GetOrdinal("updated_at"))
                                 };
+
                                 reports.Add(report);
                             }
                         }
@@ -62,6 +71,8 @@ namespace WebApi.Data.Implementations
 
             return reports;
         }
+
+
     }
 }
 

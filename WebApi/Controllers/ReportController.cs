@@ -16,5 +16,15 @@ namespace WebApi.Controllers
             _IReportBusiness = IReportBusiness;
             _ILoggingService = ILoggingService;
         }
+        // Method to get a product by its ID
+        [HttpGet("GetReports")]
+        public async Task<IActionResult> GetReports()
+        {
+
+            var reports = await _IReportBusiness.GetReportsAsync();
+
+            // If product is found, return 200 OK with the product details
+            return Ok(reports);
+        }
     }
 }

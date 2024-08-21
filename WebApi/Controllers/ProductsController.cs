@@ -51,20 +51,27 @@ namespace WebApi.Controllers
         [HttpGet("GetProducts")]
         public async Task<IActionResult> GetProducts()
         {
-             int denominator = 0;
+          
             try
             {
-                if (denominator == 0)
+                try
                 {
-
-                    throw new DivideByZeroException("Denominator cannot be zero.");
+                    // This will cause a DivideByZeroException
+                    int denominator = 0;
+                    int result = 10 / denominator;
+                }
+                catch (DivideByZeroException ex)
+                {
+                    // Simulate another exception while handling the first one
+                    throw new InvalidOperationException("An error occurred while processing your request.", ex);
                 }
             }
             catch (Exception ex)
             {
+                // The InvalidOperationException will be caught here, and it will have an InnerException
                 _ILoggingService.LogInformation(ex);
-                 _ILoggingService.LogExceptionAsync(ex);
-                //throw;
+                await _ILoggingService.LogExceptionAsync(ex);
+                //throw; // Uncomment if you want to re-throw the exception after logging
             }
 
             var products = await _IProductBusiness.GetProductsAsync();

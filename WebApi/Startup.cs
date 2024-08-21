@@ -61,6 +61,9 @@ public class Startup
         //------------------------project dependency--------------------------------------------
         services.AddScoped<IProductBusiness, ProductBusiness>();
         services.AddScoped<IProductDatabase, ProductDatabase>();
+        //------------------------report dependency--------------------------------------------
+        services.AddScoped<IReportBusiness, ReportBusiness>();
+        services.AddScoped<IReportDatabase, ReportDatabase>();
         //------------------------error logging-------------------------------------------------
         services.AddScoped<ILoggingService, LoggingService>(); // Custom service to log to the database
 
